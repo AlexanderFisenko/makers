@@ -7,6 +7,13 @@
       Please enable
       %b JavaScript
       to see this content.
+
+  - if signed_in?
+    %p.likes.pull-left
+      = fa_icon 'heart', class: 'heart-vote', data: { video_id: "#{@video.id}", voter_model: "#{signed_in_model}", voter_id: "#{signed_in_id}" }
+      %span#votes-count
+        = @video.votes_for.size
+
   %p.author-of-video.pull-right
     by
     = @video.maker.name
@@ -15,6 +22,22 @@
   - if signed_in?
     %section#comments
       %h2 Comments
-      = fa_icon 'heart', class: 'heart-vote', data: { video_id: "#{@video.id}", voter_model: "#{signed_in_model}", voter_id: "#{signed_in_id}" }
+      - if @comments
+        - @comments.each do |comment|
+          .comment
+            %p
+              = comment.authorable.nickname
+              \:
+            .well= comment.content
+
+      = form_for [@comment], html: {class: 'form-horizontal', role: 'form'} do |f|
+        = f.hidden_field :authorable_type,  value: signed_in_model
+        = f.hidden_field :authorable_id,    value: signed_in_id
+        = f.hidden_field :commentable_type, value: @video.class.to_s
+        = f.hidden_field :commentable_id,   value: @video.id
+        = f.text_area :content, class: 'form-control'
+        %br/
+        = f.submit 'Comment', class: 'btn btn-primary'
+
 
     

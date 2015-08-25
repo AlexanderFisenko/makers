@@ -1,5 +1,5 @@
 class VideosController < ApplicationController
-  before_action :authenticate_maker!, except: [:index, :show]
+  before_action :authenticate_maker!, except: [:index, :show, :like]
   before_action :set_video,           only:   [:edit, :show, :destroy, :update]
   before_action :check_access,        only:   [:edit, :destroy, :update]
 
@@ -9,7 +9,10 @@ class VideosController < ApplicationController
   end
 
   def show
-    unless signed_in?
+    if signed_in?
+      @comments = @video.comments.where.not(id: nil)
+      @comment  = @video.comments.build
+    else
       flash.now[:alert] = 'You need to sign-in to comment or vote'
     end
   end
@@ -48,19 +51,21 @@ class VideosController < ApplicationController
     redirect_to my_videos_path, notice: 'You have deleted your video!'
   end
 
-  def like_up
+  def like
     @video = Video.find(params[:video_id])
     @voter = params[:voter_model].constantize.find(params[:voter_id])
 
-    @video.liked_by @voter
+    if @voter.voted_for? @video
+      @video.unliked_by @voter
+    else
+      @video.liked_by @voter
+    end
+
+    @likes_count = @video.votes_for.size
 
     respond_to do |format|
       format.js
     end
-  end
-
-  def like_down
-
   end
 
   private

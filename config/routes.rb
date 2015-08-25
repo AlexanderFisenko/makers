@@ -5,12 +5,13 @@ Rails.application.routes.draw do
   resources :videos do
     collection do
       get 'my_videos', as: :my
-      patch 'like_up'
-      patch 'like_down'
+      patch 'like'
     end
   end
 
   root 'videos#index'
+
+  resources :comments, only: [:create]
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

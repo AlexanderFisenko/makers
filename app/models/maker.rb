@@ -6,6 +6,7 @@ class Maker < ActiveRecord::Base
   validates_presence_of :first_name, :last_name, :nickname
 
   has_many :videos, dependent: :destroy
+  has_many :comments, as: :authorable
 
 
   def name

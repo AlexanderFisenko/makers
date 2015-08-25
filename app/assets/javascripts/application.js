@@ -15,15 +15,13 @@
 //= require bootstrap-sprockets
 //= require bootstrap.notify
 //= require video
-//= require turbolinks
 //= require_tree .
 
 $(document).ready(function(){
 
-  $('.heart-vote').on('click', function() {
-
+  $('.heart-vote').click(function() {
     $.ajax({
-      url: "/videos/like_up",
+      url: "/videos/like",
       type: "PATCH",
       data: {
         'video_id': $(this).attr('data-video-id'),

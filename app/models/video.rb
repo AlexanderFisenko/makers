@@ -5,6 +5,8 @@ class Video < ActiveRecord::Base
 
   belongs_to :maker
 
+  has_many :comments, as: :commentable
+
   has_attached_file :video,
     styles: {
       # medium: { geometry: "640x480", format: 'flv' },
