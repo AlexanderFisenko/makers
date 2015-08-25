@@ -1,0 +1,22 @@
+= title "All Videos"
+
+%h2 All Videos
+.row
+  - @videos.each do |video|
+    .col-sm-6.col-md-4.col.xs-1
+      .thumbnail
+        = videojs_rails sources: { video.video.content_type.split("/").last => video.video.url } , class: 'list' do
+          Please enable
+          %b JavaScript
+          to see this content.
+        .caption
+          %p.author-of-video.pull-right
+            by
+            = video.maker.name
+          %h3= video.title
+          .row
+            .col-xs-3.col-md-4.col-sm-6
+              = link_to 'See details', video, class: 'btn btn-primary'
+
+.pagination-wrapper
+  = paginate @videos

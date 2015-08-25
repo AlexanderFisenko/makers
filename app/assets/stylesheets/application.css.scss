@@ -1,0 +1,24 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "font-awesome";
+@import "video-js";
+@import "videos";
+
+
+
+body {
+  font-family: 'Roboto', sans-serif;
+  margin-bottom: 80px;
+
+  textarea {
+    height: 300px !important;
+  }
+  h2 {
+    margin-bottom: 40px;
+  }
+
+  .well {
+    margin-top: 40px;
+  }
+
+}

@@ -1,0 +1,64 @@
+!!!
+%html
+  %head
+    %title= yield(:title).present? ? yield(:title) + '| Makers' : 'Makers'
+
+    = stylesheet_link_tag "application"
+
+    %link{:href => "https://fonts.googleapis.com/css?family=Roboto&subset=latin,cyrillic", :rel => "stylesheet", :type => "text/css"}
+    
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+  %body
+    %nav.navbar.navbar-default.navbar-static-top.navbar-inverse{:role => "navigation"}
+      .container
+        %ul.nav.navbar-nav
+          = active_link_to "All videos", videos_path, wrap_tag: :li, active: /\/videos$/
+        %ul.nav.navbar-nav{:style => "float: right"}
+          - if maker_signed_in?
+            = active_link_to "My videos", my_videos_path, wrap_tag: :li
+
+          - if maker_signed_in? || user_signed_in?
+            = active_link_to "Profile", maker_signed_in? ? edit_maker_registration_path : edit_user_registration_path, wrap_tag: :li
+
+            = active_link_to "Log out", maker_signed_in? ? destroy_maker_session_path : destroy_user_session_path, method: :delete, wrap_tag: :li
+          - if !maker_signed_in? && !user_signed_in?
+            %li.dropdown
+              %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+                Sign in as
+                %b.caret
+              %ul.dropdown-menu{:role => "menu"}
+                = active_link_to "Maker", new_maker_session_path, wrap_tag: :li
+                = active_link_to "User",  new_user_session_path,  wrap_tag: :li
+            %li.dropdown
+              %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+                Sign up as
+                %b.caret
+              %ul.dropdown-menu{:role => "menu"}
+                = active_link_to "Maker", new_maker_registration_path, wrap_tag: :li
+                = active_link_to "User",  new_user_registration_path,  wrap_tag: :li
+
+    .container
+      .row
+        .col-md-12
+          = yield
+
+
+  - if alert.present? || notice.present?
+    - message = escape_javascript(alert || notice)
+    - type    = alert ? 'danger' : 'info'
+    :javascript
+      $.notify({
+        message: "#{message.html_safe}"
+        },{
+        offset: 30,
+        type: "#{type}",
+        placement: {
+        from: "top",
+        align: "center"
+        },
+        animate: {
+        enter: 'animated zoomInDown',
+        exit: 'animated zoomOutUp'
+        }
+      });

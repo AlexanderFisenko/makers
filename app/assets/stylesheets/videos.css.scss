@@ -1,0 +1,36 @@
+@media (max-width: 1600px) {
+  video.list {
+    width: 350px;
+    height: 240px;
+  }
+}
+
+@media (max-width: 1000px) {
+  video.list {
+    width: 335px;
+    height: 240px;
+  }
+}
+
+@media (max-width: 760px) {
+  video.list {
+    width: 600px;
+    height: 240px;
+  }
+}
+
+.pagination-wrapper {
+  text-align: center;
+}
+
+p.author-of-video {
+  margin-top: 10px;
+}
+
+i.fa-heart {
+  font-size: 14px;
+  color: rgb(100, 32, 200);
+  &:hover {
+    color: #3B1671;
+  }
+}

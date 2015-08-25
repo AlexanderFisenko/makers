@@ -1,0 +1,9 @@
+= title "New video"
+
+.col-md-10
+  = form_for [@video], :html => { class: 'form-horizontal', role: 'form', multipart: true } do |f|
+    = render :partial => 'form', :locals => { f: f }
+    .form-group
+      .col-md-10.col-md-offset-2
+        = submit_tag 'Create', :class => 'btn btn-primary'
+        = link_to    'Cancel', my_videos_path, :class => 'btn btn-default'

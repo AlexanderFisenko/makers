@@ -1,0 +1,14 @@
+= f.hidden_field :maker_id, value: current_maker.id
+
+.form-group
+  %label.col-md-2.control-label Title
+  .col-md-10
+    = f.text_field :title, :class => 'form-control', :placeholder => "Title"
+.form-group
+  %label.col-md-2.control-label Description
+  .col-md-10
+    = f.text_area :description, :class => 'form-control', :placeholder => "Description"
+.form-group
+  %label.col-md-2.control-label Video
+  .col-md-10
+    = f.file_field :video

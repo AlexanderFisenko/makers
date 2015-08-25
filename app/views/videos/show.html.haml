@@ -1,0 +1,20 @@
+= title "Video \"#{@video.title}\""
+
+.col-md-7
+  %h2= @video.title
+  .embed-responsive.embed-responsive-4by3
+    = videojs_rails sources: { @video.video.content_type.split("/").last => @video.video.url }, class: 'single' do
+      Please enable
+      %b JavaScript
+      to see this content.
+  %p.author-of-video.pull-right
+    by
+    = @video.maker.name
+  .well= @video.description
+
+  - if signed_in?
+    %section#comments
+      %h2 Comments
+      = fa_icon 'heart', class: 'heart-vote', data: { video_id: "#{@video.id}", voter_model: "#{signed_in_model}", voter_id: "#{signed_in_id}" }
+
+    
